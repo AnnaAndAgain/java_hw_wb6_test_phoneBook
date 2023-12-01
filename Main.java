@@ -20,24 +20,25 @@ public class Main {
             System.out.println("Введите номер нужного действия.");
 
             int choice = scanner.nextInt();
-            //scanner.nextLine();
+            scanner.nextLine();
 
             switch (choice) {
                 case 1: ///добавляем запись: просим ввести имя и номер, дальше либо добавляем номер к тем, что уже привязаны к этому имени, лбо создаем новую пару/запись
-                    System.out.println("Введите имя:");
+                    //!!!!!!!!! почему-то не воспринимает кириллицу, пишет все номера во все имена сразу!!!
+                    System.out.println("Введите имя (латиницей!):");
                     String name = scanner.nextLine();
-                    scanner.nextLine();
+                    //scanner.nextLine();
                     System.out.println("Введите номер телефона:");
                     int phone = scanner.nextInt();
                     ArrayList<Integer> tmpPhones = myPhoneBook.getOrDefault(name, new ArrayList<>());
                     tmpPhones.add(phone);
                     myPhoneBook.put(name, tmpPhones);
-                    //!!!!!!!!! почему-то пишет все номера во все имена сразу!!!
+                    
                     break;
                 case 2: //ищем запись и выводим имя + все соответсвующие ему номера телефонов
                     System.out.println("Введите имя для поиска:");
                     String searchName = scanner.nextLine();
-                    scanner.nextLine();
+                    //scanner.nextLine();
                     if (myPhoneBook.containsKey(searchName)){
                         System.out.println(myPhoneBook.get(searchName));
                     } else{
@@ -47,7 +48,7 @@ public class Main {
                 case 3: // Удаляем запись по имени (со всеми номерами сразу) -- как развитие хорошо бы выводить номера и предлагать выбрать, который удалить
                     System.out.println("Введите имя абонента, все номера которого хотите удалить:");
                     String removeName = scanner.nextLine();
-                    scanner.nextLine();
+                    //scanner.nextLine();
                     if (myPhoneBook.containsKey(removeName)){
                         myPhoneBook.remove(removeName);
                         System.out.println("Запись успешно удалена.");
