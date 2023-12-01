@@ -2,7 +2,8 @@ package PhoneBook;
 //Реализуйте структуру телефонной книги с помощью HashMap.
 //Программа также должна учитывать, что в во входной структуре будут 
 //повторяющиеся имена с разными телефонами, 
-//их необходимо считать, как одного человека с разными телефонами. Вывод должен быть отсортирован по убыванию числа телефонов.
+//их необходимо считать, как одного человека с разными телефонами. 
+//Вывод должен быть отсортирован по убыванию числа телефонов.
 
 import java.util.*;
 
@@ -16,7 +17,8 @@ public class Main {
             System.out.println("1. Добавить номер телефона");
             System.out.println("2. Найти запись");
             System.out.println("3. Удалить запись");
-            System.out.println("4. Выйти");
+            System.out.println("4. Вывести все записи");
+            System.out.println("5. Выйти");
             System.out.println("Введите номер нужного действия.");
 
             int choice = scanner.nextInt();
@@ -30,7 +32,7 @@ public class Main {
                     //scanner.nextLine();
                     System.out.println("Введите номер телефона:");
                     int phone = scanner.nextInt();
-                    ArrayList<Integer> tmpPhones = myPhoneBook.getOrDefault(name, new ArrayList<>());
+                    ArrayList<Integer> tmpPhones = myPhoneBook.getOrDefault(name, new ArrayList<Integer>());
                     tmpPhones.add(phone);
                     myPhoneBook.put(name, tmpPhones);
                     
@@ -56,15 +58,46 @@ public class Main {
                         System.out.println("Запись с таким именем ("+ removeName +") не найдена.");
                     }
                     break;
-                case 4: // выход из программы
+                
+                case 4: // вывод всей книги по убыванию числа телефонов
+                    int maxNums = 0;
+                    //проверяем, есть ли вообще записи
+                    if (myPhoneBook.size() == 0){
+                        System.out.println("Телефонная книга пуста.");
+                        System.out.println();
+                    } else {
+                        // если есть, ищем максимальное число номеров на абонента
+                        System.out.println("---");
+                        for (var item:myPhoneBook.entrySet()){
+                            if (maxNums < item.getValue().size()){
+                                maxNums = item.getValue().size();
+                            }
+                        }
+                        // со счетчиком от максимального числа номеров до нуля проходим по тел.книге и выводим все записи с текущим числом номеров
+                        for (int i = maxNums; i >= 0; i--){
+                            for (var item:myPhoneBook.entrySet()){
+                                if (item.getValue().size() == i){
+                                    System.out.println("Абонент " + item.getKey() + ": " + String.valueOf(item.getValue()));
+                                    
+                                }
+                            }
+                        }
+                        System.out.println("---");
+                    }
+                    break;
+                
+                case 5: // выход из программы
                     System.out.println("Выхожу из телефонной книги...");
                     scanner.close();
                     System.exit(0);
                     break;
+                
+
                 default:
                     System.out.println("Это не работает. Введите номер команды!");
                     break;
             }
         }
     }
+
 }
